@@ -28,35 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            txtUsername = new TextBox();
+            txtPass = new TextBox();
             username = new Label();
             password = new Label();
             pictureBox1 = new PictureBox();
             label1 = new Label();
-            button1 = new Button();
+            btnLogin = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // textBox1
+            // txtUsername
             // 
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Location = new Point(307, 126);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Username";
-            textBox1.Size = new Size(273, 27);
-            textBox1.TabIndex = 0;
+            txtUsername.BorderStyle = BorderStyle.FixedSingle;
+            txtUsername.Location = new Point(307, 126);
+            txtUsername.Name = "txtUsername";
+            txtUsername.PlaceholderText = "Username";
+            txtUsername.Size = new Size(273, 27);
+            txtUsername.TabIndex = 0;
             // 
-            // textBox2
+            // txtPass
             // 
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(307, 208);
-            textBox2.Name = "textBox2";
-            textBox2.PasswordChar = '*';
-            textBox2.PlaceholderText = "Password";
-            textBox2.Size = new Size(273, 27);
-            textBox2.TabIndex = 1;
-            textBox2.TabStop = false;
+            txtPass.BorderStyle = BorderStyle.FixedSingle;
+            txtPass.Location = new Point(307, 208);
+            txtPass.Name = "txtPass";
+            txtPass.PasswordChar = '*';
+            txtPass.PlaceholderText = "Password";
+            txtPass.Size = new Size(273, 27);
+            txtPass.TabIndex = 1;
+            txtPass.TabStop = false;
             // 
             // username
             // 
@@ -88,7 +88,7 @@
             // 
             pictureBox1.BorderStyle = BorderStyle.FixedSingle;
             pictureBox1.Image = Properties.Resources.desola_lanre_ologun_zYgV_NGZtlA_unsplash;
-            pictureBox1.Location = new Point(12, 90);
+            pictureBox1.Location = new Point(12, 108);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(264, 176);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -108,18 +108,18 @@
             label1.Text = "LoginForm";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // btnLogin
             // 
-            button1.BackColor = Color.Green;
-            button1.BackgroundImageLayout = ImageLayout.None;
-            button1.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(307, 256);
-            button1.Name = "button1";
-            button1.Size = new Size(273, 29);
-            button1.TabIndex = 6;
-            button1.Text = "Login";
-            button1.UseVisualStyleBackColor = false;
+            btnLogin.BackColor = Color.Green;
+            btnLogin.BackgroundImageLayout = ImageLayout.None;
+            btnLogin.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogin.ForeColor = Color.White;
+            btnLogin.Location = new Point(307, 256);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(273, 29);
+            btnLogin.TabIndex = 6;
+            btnLogin.Text = "Login";
+            btnLogin.UseVisualStyleBackColor = false;
             // 
             // Form1
             // 
@@ -127,13 +127,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightSkyBlue;
             ClientSize = new Size(608, 323);
-            Controls.Add(button1);
+            Controls.Add(btnLogin);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
             Controls.Add(password);
             Controls.Add(username);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(txtPass);
+            Controls.Add(txtUsername);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
@@ -144,12 +144,12 @@
 
         #endregion
 
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox txtUsername;
+        private TextBox txtPass;
         private Label username;
         private Label password;
         private PictureBox pictureBox1;
         private Label label1;
-        private Button button1;
+        private Button btnLogin;
     }
 }
