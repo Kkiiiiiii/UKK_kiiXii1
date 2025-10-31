@@ -50,6 +50,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(label1);
             Name = "Form2";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
             ResumeLayout(false);
         }

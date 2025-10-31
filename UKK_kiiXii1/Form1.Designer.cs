@@ -101,9 +101,9 @@
             label1.Font = new Font("Trebuchet MS", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
             label1.ImageAlign = ContentAlignment.TopCenter;
-            label1.Location = new Point(0, 0);
+            label1.Location = new Point(307, 20);
             label1.Name = "label1";
-            label1.Size = new Size(610, 41);
+            label1.Size = new Size(265, 41);
             label1.TabIndex = 5;
             label1.Text = "LoginForm";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -120,6 +120,7 @@
             btnLogin.TabIndex = 6;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = false;
+            btnLogin.Click += btnLogin_Click;
             // 
             // Form1
             // 
