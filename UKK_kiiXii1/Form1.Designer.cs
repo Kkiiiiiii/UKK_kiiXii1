@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             txtUsername = new TextBox();
             txtPass = new TextBox();
             username = new Label();
@@ -35,7 +36,9 @@
             pictureBox1 = new PictureBox();
             label1 = new Label();
             btnLogin = new Button();
+            pictureBox2 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // txtUsername
@@ -97,13 +100,14 @@
             // 
             // label1
             // 
+            label1.AccessibleRole = AccessibleRole.None;
             label1.BackColor = SystemColors.ActiveCaptionText;
             label1.Font = new Font("Trebuchet MS", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
             label1.ImageAlign = ContentAlignment.TopCenter;
-            label1.Location = new Point(307, 20);
+            label1.Location = new Point(12, 179);
             label1.Name = "label1";
-            label1.Size = new Size(265, 41);
+            label1.Size = new Size(264, 41);
             label1.TabIndex = 5;
             label1.Text = "LoginForm";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -112,6 +116,7 @@
             // 
             btnLogin.BackColor = Color.Green;
             btnLogin.BackgroundImageLayout = ImageLayout.None;
+            btnLogin.FlatStyle = FlatStyle.Popup;
             btnLogin.Font = new Font("Times New Roman", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnLogin.ForeColor = Color.White;
             btnLogin.Location = new Point(307, 256);
@@ -122,12 +127,26 @@
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
+            // pictureBox2
+            // 
+            pictureBox2.BorderStyle = BorderStyle.Fixed3D;
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(396, 11);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(85, 75);
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.TabIndex = 7;
+            pictureBox2.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = Color.LightSkyBlue;
+            BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(608, 323);
+            Controls.Add(pictureBox2);
             Controls.Add(btnLogin);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
@@ -139,6 +158,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -152,5 +172,6 @@
         private PictureBox pictureBox1;
         private Label label1;
         private Button btnLogin;
+        private PictureBox pictureBox2;
     }
 }
