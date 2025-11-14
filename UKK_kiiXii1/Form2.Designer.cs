@@ -29,27 +29,33 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
+            Id = new DataGridViewTextBoxColumn();
+            NamaProduk = new DataGridViewTextBoxColumn();
+            Harga = new DataGridViewTextBoxColumn();
+            Stok = new DataGridViewTextBoxColumn();
+            Deskripsi = new DataGridViewTextBoxColumn();
+            btnTambah = new Button();
+            btnupdate = new Button();
+            btnHapus = new Button();
+            txtIDUser = new TextBox();
+            txtNamaProduk = new TextBox();
+            txtHarga = new TextBox();
+            txtDes = new TextBox();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
             pictureBox1 = new PictureBox();
-            label7 = new Label();
-            dateTimePicker1 = new DateTimePicker();
             openFileDialog1 = new OpenFileDialog();
             button4 = new Button();
             label8 = new Label();
-            textBox5 = new TextBox();
+            txtStok = new TextBox();
             name = new Label();
             btnLogout = new Button();
+            label1 = new Label();
+            txtIDProduk = new TextBox();
+            dtpTanggalProduk = new DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -57,71 +63,109 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 52);
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, NamaProduk, Harga, Stok, Deskripsi });
+            dataGridView1.Location = new Point(12, 59);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(621, 301);
+            dataGridView1.Size = new Size(679, 314);
             dataGridView1.TabIndex = 1;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // button1
+            // Id
             // 
-            button1.Location = new Point(897, 408);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 2;
-            button1.Text = "Tambah";
-            button1.UseVisualStyleBackColor = true;
+            Id.HeaderText = "ID Produk";
+            Id.MinimumWidth = 6;
+            Id.Name = "Id";
+            Id.Width = 125;
             // 
-            // button2
+            // NamaProduk
             // 
-            button2.Location = new Point(1005, 408);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 3;
-            button2.Text = "Update";
-            button2.UseVisualStyleBackColor = true;
+            NamaProduk.HeaderText = "Nama Produk";
+            NamaProduk.MinimumWidth = 6;
+            NamaProduk.Name = "NamaProduk";
+            NamaProduk.Width = 125;
             // 
-            // button3
+            // Harga
             // 
-            button3.Location = new Point(1115, 408);
-            button3.Name = "button3";
-            button3.Size = new Size(94, 29);
-            button3.TabIndex = 4;
-            button3.Text = "Hapus";
-            button3.UseVisualStyleBackColor = true;
+            Harga.HeaderText = "Harga";
+            Harga.MinimumWidth = 6;
+            Harga.Name = "Harga";
+            Harga.Width = 125;
             // 
-            // textBox1
+            // Stok
             // 
-            textBox1.Location = new Point(894, 75);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(305, 27);
-            textBox1.TabIndex = 5;
+            Stok.HeaderText = "Stok";
+            Stok.MinimumWidth = 6;
+            Stok.Name = "Stok";
+            Stok.Width = 125;
             // 
-            // textBox2
+            // Deskripsi
             // 
-            textBox2.Location = new Point(894, 132);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(305, 27);
-            textBox2.TabIndex = 6;
+            Deskripsi.HeaderText = "Deskripsi";
+            Deskripsi.MinimumWidth = 6;
+            Deskripsi.Name = "Deskripsi";
+            Deskripsi.Width = 125;
             // 
-            // textBox3
+            // btnTambah
             // 
-            textBox3.Location = new Point(895, 184);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(305, 27);
-            textBox3.TabIndex = 7;
+            btnTambah.Location = new Point(958, 428);
+            btnTambah.Name = "btnTambah";
+            btnTambah.Size = new Size(94, 34);
+            btnTambah.TabIndex = 2;
+            btnTambah.Text = "Tambah";
+            btnTambah.UseVisualStyleBackColor = true;
+            btnTambah.Click += btnTambah_Click;
             // 
-            // textBox4
+            // btnupdate
             // 
-            textBox4.Location = new Point(895, 299);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(305, 27);
-            textBox4.TabIndex = 8;
+            btnupdate.Location = new Point(1068, 428);
+            btnupdate.Name = "btnupdate";
+            btnupdate.Size = new Size(94, 34);
+            btnupdate.TabIndex = 3;
+            btnupdate.Text = "Update";
+            btnupdate.UseVisualStyleBackColor = true;
+            // 
+            // btnHapus
+            // 
+            btnHapus.Location = new Point(1178, 428);
+            btnHapus.Name = "btnHapus";
+            btnHapus.Size = new Size(94, 29);
+            btnHapus.TabIndex = 4;
+            btnHapus.Text = "Hapus";
+            btnHapus.UseVisualStyleBackColor = true;
+            // 
+            // txtIDUser
+            // 
+            txtIDUser.Location = new Point(959, 153);
+            txtIDUser.Name = "txtIDUser";
+            txtIDUser.Size = new Size(305, 27);
+            txtIDUser.TabIndex = 5;
+            // 
+            // txtNamaProduk
+            // 
+            txtNamaProduk.Location = new Point(956, 215);
+            txtNamaProduk.Name = "txtNamaProduk";
+            txtNamaProduk.Size = new Size(305, 27);
+            txtNamaProduk.TabIndex = 6;
+            // 
+            // txtHarga
+            // 
+            txtHarga.Location = new Point(957, 267);
+            txtHarga.Name = "txtHarga";
+            txtHarga.Size = new Size(305, 27);
+            txtHarga.TabIndex = 7;
+            // 
+            // txtDes
+            // 
+            txtDes.Location = new Point(957, 382);
+            txtDes.Name = "txtDes";
+            txtDes.Size = new Size(305, 27);
+            txtDes.TabIndex = 8;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(894, 109);
+            label2.Location = new Point(956, 192);
             label2.Name = "label2";
             label2.Size = new Size(99, 20);
             label2.TabIndex = 9;
@@ -130,7 +174,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(894, 51);
+            label3.Location = new Point(959, 129);
             label3.Name = "label3";
             label3.Size = new Size(57, 20);
             label3.TabIndex = 10;
@@ -139,7 +183,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(895, 161);
+            label4.Location = new Point(957, 244);
             label4.Name = "label4";
             label4.Size = new Size(50, 20);
             label4.TabIndex = 11;
@@ -148,7 +192,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(897, 276);
+            label5.Location = new Point(959, 359);
             label5.Name = "label5";
             label5.Size = new Size(67, 20);
             label5.TabIndex = 12;
@@ -157,7 +201,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(666, 52);
+            label6.Location = new Point(726, 96);
             label6.Name = "label6";
             label6.Size = new Size(112, 20);
             label6.TabIndex = 13;
@@ -165,27 +209,11 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(666, 89);
+            pictureBox1.Location = new Point(726, 133);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(210, 179);
+            pictureBox1.Size = new Size(210, 184);
             pictureBox1.TabIndex = 14;
             pictureBox1.TabStop = false;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(895, 333);
-            label7.Name = "label7";
-            label7.Size = new Size(114, 20);
-            label7.TabIndex = 15;
-            label7.Text = "Tanggal Upload";
-            // 
-            // dateTimePicker1
-            // 
-            dateTimePicker1.Location = new Point(895, 356);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(302, 27);
-            dateTimePicker1.TabIndex = 16;
             // 
             // openFileDialog1
             // 
@@ -193,9 +221,9 @@
             // 
             // button4
             // 
-            button4.Location = new Point(666, 278);
+            button4.Location = new Point(726, 322);
             button4.Name = "button4";
-            button4.Size = new Size(210, 29);
+            button4.Size = new Size(210, 34);
             button4.TabIndex = 17;
             button4.Text = "Unggah Gambar";
             button4.UseVisualStyleBackColor = true;
@@ -203,27 +231,27 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(895, 218);
+            label8.Location = new Point(957, 301);
             label8.Name = "label8";
             label8.Size = new Size(38, 20);
             label8.TabIndex = 19;
             label8.Text = "Stok";
             // 
-            // textBox5
+            // txtStok
             // 
-            textBox5.Location = new Point(895, 241);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(305, 27);
-            textBox5.TabIndex = 18;
+            txtStok.Location = new Point(957, 324);
+            txtStok.Name = "txtStok";
+            txtStok.Size = new Size(305, 27);
+            txtStok.TabIndex = 18;
             // 
             // name
             // 
             name.BackColor = Color.DarkBlue;
             name.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             name.ForeColor = Color.GhostWhite;
-            name.Location = new Point(12, -1);
+            name.Location = new Point(-1, -1);
             name.Name = "name";
-            name.Size = new Size(1213, 40);
+            name.Size = new Size(1284, 40);
             name.TabIndex = 20;
             name.Text = "Selamat Datang,";
             name.TextAlign = ContentAlignment.MiddleCenter;
@@ -241,31 +269,55 @@
             btnLogout.UseVisualStyleBackColor = false;
             btnLogout.Click += btnLogout_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(956, 65);
+            label1.Name = "label1";
+            label1.Size = new Size(74, 20);
+            label1.TabIndex = 23;
+            label1.Text = "ID Produk";
+            // 
+            // txtIDProduk
+            // 
+            txtIDProduk.Location = new Point(956, 89);
+            txtIDProduk.Name = "txtIDProduk";
+            txtIDProduk.Size = new Size(305, 27);
+            txtIDProduk.TabIndex = 22;
+            // 
+            // dtpTanggalProduk
+            // 
+            dtpTanggalProduk.Location = new Point(728, 380);
+            dtpTanggalProduk.Name = "dtpTanggalProduk";
+            dtpTanggalProduk.Size = new Size(210, 27);
+            dtpTanggalProduk.TabIndex = 24;
+            // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1225, 527);
+            ClientSize = new Size(1283, 532);
+            Controls.Add(dtpTanggalProduk);
+            Controls.Add(label1);
+            Controls.Add(txtIDProduk);
             Controls.Add(btnLogout);
             Controls.Add(name);
             Controls.Add(label8);
-            Controls.Add(textBox5);
+            Controls.Add(txtStok);
             Controls.Add(button4);
-            Controls.Add(dateTimePicker1);
-            Controls.Add(label7);
             Controls.Add(pictureBox1);
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(txtDes);
+            Controls.Add(txtHarga);
+            Controls.Add(txtNamaProduk);
+            Controls.Add(txtIDUser);
+            Controls.Add(btnHapus);
+            Controls.Add(btnupdate);
+            Controls.Add(btnTambah);
             Controls.Add(dataGridView1);
             Name = "Home";
             StartPosition = FormStartPosition.CenterScreen;
@@ -279,26 +331,32 @@
 
         #endregion
         private DataGridView dataGridView1;
-        private Button button1;
-        private Button button2;
-        private Button button3;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
+        private Button btnTambah;
+        private Button btnupdate;
+        private Button btnHapus;
+        private TextBox txtIDUser;
+        private TextBox txtNamaProduk;
+        private TextBox txtHarga;
+        private TextBox txtDes;
         private Label label2;
         private Label label3;
         private Label label4;
         private Label label5;
         private Label label6;
         private PictureBox pictureBox1;
-        private Label label7;
-        private DateTimePicker dateTimePicker1;
         private OpenFileDialog openFileDialog1;
         private Button button4;
         private Label label8;
-        private TextBox textBox5;
+        private TextBox txtStok;
         private Label name;
         private Button btnLogout;
+        private Label label1;
+        private TextBox txtIDProduk;
+        private DateTimePicker dtpTanggalProduk;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn NamaProduk;
+        private DataGridViewTextBoxColumn Harga;
+        private DataGridViewTextBoxColumn Stok;
+        private DataGridViewTextBoxColumn Deskripsi;
     }
 }
