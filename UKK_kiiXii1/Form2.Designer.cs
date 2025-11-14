@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
             dataGridView1 = new DataGridView();
             button1 = new Button();
             button2 = new Button();
@@ -50,21 +49,10 @@
             label8 = new Label();
             textBox5 = new TextBox();
             name = new Label();
+            btnLogout = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.BackColor = Color.Black;
-            label1.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(-1, -1);
-            label1.Name = "label1";
-            label1.Size = new Size(1232, 41);
-            label1.TabIndex = 0;
-            label1.Text = "Daftar Produk";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // dataGridView1
             // 
@@ -230,21 +218,35 @@
             // 
             // name
             // 
-            name.BackColor = Color.Red;
+            name.BackColor = Color.DarkBlue;
             name.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            name.ForeColor = SystemColors.Control;
-            name.Location = new Point(306, -1);
+            name.ForeColor = Color.GhostWhite;
+            name.Location = new Point(12, -1);
             name.Name = "name";
-            name.Size = new Size(589, 40);
+            name.Size = new Size(1213, 40);
             name.TabIndex = 20;
             name.Text = "Selamat Datang,";
             name.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnLogout
+            // 
+            btnLogout.BackColor = Color.Red;
+            btnLogout.FlatStyle = FlatStyle.Popup;
+            btnLogout.ForeColor = SystemColors.Control;
+            btnLogout.Location = new Point(1081, 4);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(81, 30);
+            btnLogout.TabIndex = 21;
+            btnLogout.Text = "Logout";
+            btnLogout.UseVisualStyleBackColor = false;
+            btnLogout.Click += btnLogout_Click;
             // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1225, 527);
+            Controls.Add(btnLogout);
             Controls.Add(name);
             Controls.Add(label8);
             Controls.Add(textBox5);
@@ -265,7 +267,6 @@
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(dataGridView1);
-            Controls.Add(label1);
             Name = "Home";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
@@ -277,8 +278,6 @@
         }
 
         #endregion
-
-        private Label label1;
         private DataGridView dataGridView1;
         private Button button1;
         private Button button2;
@@ -300,5 +299,6 @@
         private Label label8;
         private TextBox textBox5;
         private Label name;
+        private Button btnLogout;
     }
 }
