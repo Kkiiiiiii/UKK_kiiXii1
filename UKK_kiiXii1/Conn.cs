@@ -9,7 +9,7 @@ namespace UKK_kiiXii1
 {
     internal class Conn
     {
-        private const string ConnectionString = "Data Source=DESKTOP-MOUI7DH\\SQLEXPRESS;Initial Catalog=ukk_riki;Integrated Security=True;Trust Server Certificate=True";
+        private const string ConnectionString = @"Data Source=MYPCPRO\SQLEXPRESS;Initial Catalog=ukk_riki;Integrated Security=True;TrustServerCertificate=True";
 
         public SqlConnection GetConn()
         {

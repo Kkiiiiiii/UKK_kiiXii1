@@ -19,7 +19,7 @@ namespace UKK_kiiXii1
         {
             InitializeComponent();
             username = nama;
-            this.name.Text = "Selamat Datang," + nama;
+            this.name.Text = "Selamat Datang, " + nama;
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -50,27 +50,34 @@ namespace UKK_kiiXii1
 
             try
             {
-                using (SqlConnection Conn = new SqlConnection(@"Data Source=DESKTOP-MOUI7DH\SQLEXPRESS;Initial Catalog=ukk_riki;Integrated Security=True;Trust Server Certificate=True"))
+                using (SqlConnection Conn = new SqlConnection(@"Data Source=MYPCPRO\SQLEXPRESS;Initial Catalog=ukk_riki;Integrated Security=True;TrustServerCertificate=True"))
                 {
                     Conn.Open();
 
-                    string sql = "INSERT INTO Product (ProductName, Price, Image) VALUES (@name, @price, @image)";
+                    string sql = "INSERT INTO products (id_produk, id_user, nama_produk, harga, stok, deskripsi, gambar_produk) " +
+                                 "VALUES (@id_produk, @id_user, @nama_produk, @harga, @stok, @deskripsi, @gambar_produk)";
+
                     using (SqlCommand cmd = new SqlCommand(sql, Conn))
                     {
-                        cmd.Parameters.AddWithValue("@name", txtNamaProduk.Text);
-                        cmd.Parameters.AddWithValue("@price", decimal.Parse(txtHarga.Text));
+                        cmd.Parameters.AddWithValue("@id_produk", int.Parse(txtIDProduk.Text));
+                        cmd.Parameters.AddWithValue("@id_user", int.Parse(txtIDUser.Text));
+                        cmd.Parameters.AddWithValue("@nama_produk", txtNamaProduk.Text);
+                        cmd.Parameters.AddWithValue("@harga", decimal.Parse(txtHarga.Text));
+                        cmd.Parameters.AddWithValue("@stok", int.Parse(txtStok.Text));
+                        cmd.Parameters.AddWithValue("@deskripsi", txtDes.Text);
 
+                        // gambar_produk
                         if (pictureBox1.Image != null)
                         {
                             using (MemoryStream ms = new MemoryStream())
                             {
                                 pictureBox1.Image.Save(ms, pictureBox1.Image.RawFormat);
-                                cmd.Parameters.AddWithValue("@image", ms.ToArray());
+                                cmd.Parameters.AddWithValue("@gambar_produk", ms.ToArray());
                             }
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@image", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@gambar_produk", DBNull.Value);
                         }
 
                         int rows = cmd.ExecuteNonQuery();
@@ -78,8 +85,11 @@ namespace UKK_kiiXii1
                         if (rows > 0)
                         {
                             MessageBox.Show("Produk berhasil ditambahkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                             txtNamaProduk.Clear();
                             txtHarga.Clear();
+                            txtStok.Clear();
+                            txtDes.Clear();
                             pictureBox1.Image = null;
                         }
                         else
@@ -95,11 +105,33 @@ namespace UKK_kiiXii1
             }
             catch (FormatException)
             {
-                MessageBox.Show("Harga harus berupa angka.", "Input Salah", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Harga dan stok harus berupa angka.", "Input Salah", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
+
+
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnUpload_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
+            }
+        }
+
+        private void btnLogout_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -122,9 +154,9 @@ namespace UKK_kiiXii1
                 }
 
                 // Tampilkan gambar
-                if (row.Cells["Image"].Value != DBNull.Value)
+                if (row.Cells["gambar_produk"].Value != DBNull.Value)
                 {
-                    byte[] img = (byte[])row.Cells["Image"].Value;
+                    byte[] img = (byte[])row.Cells["gambar_produk"].Value;
                     using (MemoryStream ms = new MemoryStream(img))
                     {
                         pictureBox1.Image = Image.FromStream(ms);
@@ -136,7 +168,5 @@ namespace UKK_kiiXii1
                 }
             }
         }
-
-
     }
 }
