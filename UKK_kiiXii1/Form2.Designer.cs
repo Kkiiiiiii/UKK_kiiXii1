@@ -29,12 +29,10 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
-            txtIDUser = new TextBox();
             txtNamaProduk = new TextBox();
             txtHarga = new TextBox();
             txtDes = new TextBox();
             label2 = new Label();
-            label3 = new Label();
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
@@ -65,14 +63,6 @@
             dataGridView1.Size = new Size(753, 236);
             dataGridView1.TabIndex = 1;
             dataGridView1.CellClick += dataGridView1_CellClick;
-            // 
-            // txtIDUser
-            // 
-            txtIDUser.Location = new Point(356, 92);
-            txtIDUser.Margin = new Padding(3, 2, 3, 2);
-            txtIDUser.Name = "txtIDUser";
-            txtIDUser.Size = new Size(124, 23);
-            txtIDUser.TabIndex = 5;
             // 
             // txtNamaProduk
             // 
@@ -107,15 +97,6 @@
             label2.Size = new Size(80, 15);
             label2.TabIndex = 9;
             label2.Text = "Nama Produk";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(365, 66);
-            label3.Name = "label3";
-            label3.Size = new Size(44, 15);
-            label3.TabIndex = 10;
-            label3.Text = "ID User";
             // 
             // label4
             // 
@@ -289,12 +270,10 @@
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
-            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(txtDes);
             Controls.Add(txtHarga);
             Controls.Add(txtNamaProduk);
-            Controls.Add(txtIDUser);
             Controls.Add(btnupdate);
             Controls.Add(btnTambah);
             Controls.Add(dataGridView1);
@@ -311,12 +290,10 @@
 
         #endregion
         private DataGridView dataGridView1;
-        private TextBox txtIDUser;
         private TextBox txtNamaProduk;
         private TextBox txtHarga;
         private TextBox txtDes;
         private Label label2;
-        private Label label3;
         private Label label4;
         private Label label5;
         private Label label6;

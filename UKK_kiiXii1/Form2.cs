@@ -25,6 +25,8 @@ namespace UKK_kiiXii1
             username = nama;
             this.name.Text = "Selamat Datang, " + nama;
             conn = new Conn();
+
+            LoadData();
         }
 
         private void LoadData()
@@ -183,7 +185,6 @@ namespace UKK_kiiXii1
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 txtIDProduk.Text = row.Cells["id_produk"].Value.ToString();
-                txtIDUser.Text = row.Cells["id_user"].Value.ToString();
                 txtNamaProduk.Text = row.Cells["nama_produk"].Value.ToString();
                 txtHarga.Text = row.Cells["harga"].Value.ToString();
                 txtStok.Text = row.Cells["stok"].Value.ToString();
@@ -265,7 +266,6 @@ namespace UKK_kiiXii1
                         imagePath = result.ToString();
                 }
 
-                // Hapus dari database
                 string deleteQuery = "DELETE FROM products WHERE id_produk = @id_produk";
                 using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, sqlConnection))
                 {
@@ -294,7 +294,6 @@ namespace UKK_kiiXii1
 
                 txtNamaProduk.Clear();
                 txtIDProduk.Clear();
-                txtIDUser.Clear();
                 txtHarga.Clear();
                 txtStok.Clear();
                 txtDes.Clear();
