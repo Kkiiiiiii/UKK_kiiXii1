@@ -49,12 +49,15 @@
             btnupdate = new Button();
             btnTambah = new Button();
             btnHapus = new Button();
+            txtSearch = new TextBox();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
+            dataGridView1.BackgroundColor = SystemColors.InactiveCaption;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(508, 104);
             dataGridView1.Margin = new Padding(3, 2, 3, 2);
@@ -127,6 +130,7 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.BackColor = SystemColors.ActiveCaption;
             pictureBox1.BorderStyle = BorderStyle.FixedSingle;
             pictureBox1.Location = new Point(13, 115);
             pictureBox1.Margin = new Padding(3, 2, 3, 2);
@@ -252,11 +256,34 @@
             btnHapus.UseVisualStyleBackColor = true;
             btnHapus.Click += btnHapus_Click;
             // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(508, 66);
+            txtSearch.Margin = new Padding(3, 2, 3, 2);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(316, 23);
+            txtSearch.TabIndex = 27;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // label3
+            // 
+            label3.BackColor = Color.Black;
+            label3.BorderStyle = BorderStyle.FixedSingle;
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(830, 69);
+            label3.Name = "label3";
+            label3.Size = new Size(75, 20);
+            label3.TabIndex = 28;
+            label3.Text = "Search";
+            label3.TextAlign = ContentAlignment.TopCenter;
+            // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1263, 419);
+            Controls.Add(label3);
+            Controls.Add(txtSearch);
             Controls.Add(btnHapus);
             Controls.Add(btnUpload);
             Controls.Add(dtpTanggalProduk);
@@ -310,5 +337,7 @@
         private Button btnupdate;
         private Button btnTambah;
         private Button btnHapus;
+        private TextBox txtSearch;
+        private Label label3;
     }
 }

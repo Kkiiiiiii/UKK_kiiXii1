@@ -141,8 +141,6 @@ namespace UKK_kiiXii1
                             txtStok.Clear();
                             txtDes.Clear();
                             pictureBox1.Image = null;
-
-                            //Form2_Load(sender, e);
                             LoadData();
                         }
                         else
@@ -277,8 +275,8 @@ namespace UKK_kiiXii1
 
                 if (pictureBox1.Image != null)
                 {
-                    pictureBox1.Image.Dispose();   // lepas memori
-                    pictureBox1.Image = null;  
+                    pictureBox1.Image.Dispose();
+                    pictureBox1.Image = null;
                 }
 
                 if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
@@ -397,9 +395,8 @@ namespace UKK_kiiXii1
                         cmdUpdate.ExecuteNonQuery();
                     }
 
-                    MessageBox.Show("Data berhasil diubah!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Data berhasil diubah!", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Clear form
                     txtIDProduk.Clear();
                     txtNamaProduk.Clear();
                     txtHarga.Clear();
@@ -428,5 +425,48 @@ namespace UKK_kiiXii1
         {
 
         }
-    }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            SearchData(txtSearch.Text.Trim());
+        }
+        private void SearchData(string keyword)
+        {
+            SqlConnection sqlConnection = conn.GetConn();
+
+            try
+            {
+                sqlConnection.Open();
+
+                string query = "SELECT id_produk, id_user, nama_produk, harga, stok, deskripsi, gambar_produk, tanggal_upload " +
+                               "FROM products WHERE nama_produk LIKE @keyword";
+                cmd = new SqlCommand(query, sqlConnection);
+                cmd.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
+
+                ds = new DataSet();
+                dataAdapter = new SqlDataAdapter(cmd);
+                dataAdapter.Fill(ds, "products");
+
+                dataGridView1.DataSource = ds.Tables["products"];
+
+                dataGridView1.Columns["id_produk"].HeaderText = "ID_Produk";
+                dataGridView1.Columns["id_user"].HeaderText = "ID_User";
+                dataGridView1.Columns["nama_produk"].HeaderText = "Nama_Produk";
+                dataGridView1.Columns["harga"].HeaderText = "Harga";
+                dataGridView1.Columns["stok"].HeaderText = "Stok";
+                dataGridView1.Columns["deskripsi"].HeaderText = "Deskripsi";
+                dataGridView1.Columns["tanggal_upload"].HeaderText = "Tanggal Upload";
+                dataGridView1.Columns["gambar_produk"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+        }
+      }
 }
