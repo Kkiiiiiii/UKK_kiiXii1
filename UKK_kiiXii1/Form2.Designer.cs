@@ -247,6 +247,7 @@
             btnupdate.TabIndex = 3;
             btnupdate.Text = "Update";
             btnupdate.UseVisualStyleBackColor = true;
+            btnupdate.Click += btnupdate_Click;
             // 
             // btnTambah
             // 
@@ -261,19 +262,20 @@
             // 
             // btnHapus
             // 
-            btnHapus.Location = new Point(413, 356);
+            btnHapus.Location = new Point(412, 356);
             btnHapus.Margin = new Padding(3, 2, 3, 2);
             btnHapus.Name = "btnHapus";
             btnHapus.Size = new Size(82, 26);
             btnHapus.TabIndex = 26;
             btnHapus.Text = "Hapus";
             btnHapus.UseVisualStyleBackColor = true;
+            btnHapus.Click += btnHapus_Click;
             // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1262, 419);
+            ClientSize = new Size(1263, 419);
             Controls.Add(btnHapus);
             Controls.Add(btnUpload);
             Controls.Add(dtpTanggalProduk);
@@ -300,6 +302,7 @@
             Name = "Home";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
+            Load += Home_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

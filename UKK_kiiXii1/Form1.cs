@@ -13,7 +13,6 @@ namespace UKK_kiiXii1
         {
             string username = txtUsername.Text;
             string password = txtPass.Text;
-            string name = "";
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
@@ -23,47 +22,46 @@ namespace UKK_kiiXii1
 
             try
             {
-                using (SqlConnection Conn = new SqlConnection(@"Data Source=MYPCPRO\SQLEXPRESS;Initial Catalog=ukk_riki;Integrated Security=True;TrustServerCertificate=True"))
+                using (SqlConnection Conn = new SqlConnection(
+                    @"Data Source=MYPCPRO\SQLEXPRESS;Initial Catalog=ukk_riki;Integrated Security=True;TrustServerCertificate=True"))
                 {
                     Conn.Open();
 
-                    string query = "SELECT COUNT(*) FROM [users] WHERE username = @username AND password = @password";
+                    // Ambil id_user + nama langsung
+                    string query = @"
+                        SELECT id_user, nama 
+                        FROM users 
+                        WHERE username = @username AND password = @password";
+
                     using (SqlCommand cmd = new SqlCommand(query, Conn))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
                         cmd.Parameters.AddWithValue("@password", password);
 
-                        int count = Convert.ToInt32(cmd.ExecuteScalar());
-
-                        if (count > 0)
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            string queryUser = "SELECT nama FROM [users] WHERE username = @username";
-                            using (SqlCommand cmd2 = new SqlCommand(queryUser, Conn))
+                            if (reader.Read())
                             {
-                                cmd2.Parameters.AddWithValue("@username", username);
+                                int idUser = reader.GetInt32(0);   // ambil id_user
+                                string name = reader.GetString(1); // ambil nama
 
-                                using (SqlDataReader reader = cmd2.ExecuteReader())
-                                {
-                                    if (reader.Read())
-                                    {
-                                        name = reader.GetString(0);
+                                // SIMPAN ID USER KE SESSION
+                                UserSession.UserID = idUser;
 
-                                        MessageBox.Show("Login Berhasil!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Login Berhasil!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                        Home f2 = new Home(name);
-                                        this.Hide();
-                                        f2.ShowDialog();
-                                        this.Show();
+                                Home f2 = new Home(name);
+                                this.Hide();
+                                f2.ShowDialog();
+                                this.Show();
 
-                                        txtUsername.Clear();
-                                        txtPass.Clear();
-                                    }
-                                }
+                                txtUsername.Clear();
+                                txtPass.Clear();
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Username atau password salah.", "Login Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            else
+                            {
+                                MessageBox.Show("Username atau password salah.", "Login Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                 }
