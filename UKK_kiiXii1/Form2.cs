@@ -46,8 +46,8 @@ namespace UKK_kiiXii1
 
                 dataGridView1.DataSource = ds.Tables["products"];
 
-                //dataGridView1.Columns["id_produk"].HeaderText = "ID_Produk";
-                //dataGridView1.Columns["id_user"].HeaderText = "ID_User";
+                dataGridView1.Columns["id_produk"].Visible = false;
+                dataGridView1.Columns["id_user"].Visible  = false;
                 dataGridView1.Columns["nama_produk"].HeaderText = "Nama_Produk";
                 dataGridView1.Columns["harga"].HeaderText = "Harga";
                 dataGridView1.Columns["stok"].HeaderText = "Stok";
@@ -233,14 +233,14 @@ namespace UKK_kiiXii1
         {
             try
             {
-                // Cek apakah ada baris yang dipilih di DataGridView
+                // Unutk cek apakah ada baris yang dipilih di DataGridView
                 if (dataGridView1.SelectedRows.Count == 0)
                 {
                     MessageBox.Show("Pilih produk yang ingin dihapus!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Ambil ID Produk dari baris yang dipilih
+                // Mnegambil ID Produk dari baris yang dipilih
                 int itemId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id_produk"].Value);
 
                 // Konfirmasi hapus
@@ -287,7 +287,6 @@ namespace UKK_kiiXii1
 
                 MessageBox.Show("Produk berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Merefresh data grid dan reset form
                 LoadData();
 
                 // Reset form
@@ -428,8 +427,8 @@ namespace UKK_kiiXii1
 
                 dataGridView1.DataSource = ds.Tables["products"];
 
-                dataGridView1.Columns["id_produk"].HeaderText = "ID_Produk";
-                dataGridView1.Columns["id_user"].HeaderText = "ID_User";
+                //dataGridView1.Columns["id_produk"].HeaderText = "ID_Produk";
+                //dataGridView1.Columns["id_user"].HeaderText = "ID_User";
                 dataGridView1.Columns["nama_produk"].HeaderText = "Nama_Produk";
                 dataGridView1.Columns["harga"].HeaderText = "Harga";
                 dataGridView1.Columns["stok"].HeaderText = "Stok";

@@ -61,7 +61,7 @@
             dataGridView1.Margin = new Padding(3, 2, 3, 2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(753, 236);
+            dataGridView1.Size = new Size(555, 236);
             dataGridView1.TabIndex = 1;
             dataGridView1.CellClick += dataGridView1_CellClick;
             // 
@@ -160,7 +160,7 @@
             name.BackColor = Color.DarkBlue;
             name.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             name.ForeColor = Color.GhostWhite;
-            name.Location = new Point(0, -9);
+            name.Location = new Point(-76, 0);
             name.Name = "name";
             name.Size = new Size(1261, 42);
             name.TabIndex = 20;
@@ -172,7 +172,7 @@
             btnLogout.BackColor = Color.Red;
             btnLogout.FlatStyle = FlatStyle.Popup;
             btnLogout.ForeColor = SystemColors.Control;
-            btnLogout.Location = new Point(1037, 5);
+            btnLogout.Location = new Point(988, 7);
             btnLogout.Margin = new Padding(3, 2, 3, 2);
             btnLogout.Name = "btnLogout";
             btnLogout.Size = new Size(71, 22);
@@ -263,7 +263,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1259, 426);
+            ClientSize = new Size(1071, 426);
             Controls.Add(label3);
             Controls.Add(txtSearch);
             Controls.Add(btnHapus);
