@@ -46,8 +46,8 @@ namespace UKK_kiiXii1
 
                 dataGridView1.DataSource = ds.Tables["products"];
 
-                dataGridView1.Columns["id_produk"].HeaderText = "ID_Produk";
-                dataGridView1.Columns["id_user"].HeaderText = "ID_User";
+                //dataGridView1.Columns["id_produk"].HeaderText = "ID_Produk";
+                //dataGridView1.Columns["id_user"].HeaderText = "ID_User";
                 dataGridView1.Columns["nama_produk"].HeaderText = "Nama_Produk";
                 dataGridView1.Columns["harga"].HeaderText = "Harga";
                 dataGridView1.Columns["stok"].HeaderText = "Stok";
@@ -99,12 +99,12 @@ namespace UKK_kiiXii1
                 {
                     Conn.Open();
 
-                    string sql = "INSERT INTO products (id_produk, id_user, nama_produk, harga, stok, deskripsi, gambar_produk, tanggal_upload) " +
-                                 "VALUES (@id_produk, @id_user, @nama_produk, @harga, @stok, @deskripsi, @gambar_produk, @tanggal_upload)";
+                    string sql = "INSERT INTO products (id_user, nama_produk, harga, stok, deskripsi, gambar_produk, tanggal_upload) " +
+                                 "VALUES (@id_user, @nama_produk, @harga, @stok, @deskripsi, @gambar_produk, @tanggal_upload);" +
+                                 "SELECT SCOPE_IDENTITY();";  // Ambil ID produk yang baru dimasukkan
 
                     using (SqlCommand cmd = new SqlCommand(sql, Conn))
                     {
-                        cmd.Parameters.AddWithValue("@id_produk", int.Parse(txtIDProduk.Text));
                         cmd.Parameters.AddWithValue("@id_user", UserSession.UserID);
                         cmd.Parameters.AddWithValue("@nama_produk", txtNamaProduk.Text);
                         cmd.Parameters.AddWithValue("@harga", decimal.Parse(txtHarga.Text));
@@ -112,16 +112,18 @@ namespace UKK_kiiXii1
                         cmd.Parameters.AddWithValue("@deskripsi", txtDes.Text);
                         cmd.Parameters.AddWithValue("@tanggal_upload", DateTime.Now);
 
-                        // Simpan gambar ke folder images di folder project saat ini
+                        // Simpan gambar jika ada
                         string imagesFolder = Path.Combine(Application.StartupPath, "images");
                         if (!Directory.Exists(imagesFolder))
                         {
                             Directory.CreateDirectory(imagesFolder);
                         }
 
+                        string imagePath = null;
                         if (pictureBox1.Image != null)
                         {
-                            string imagePath = Path.Combine(imagesFolder, txtIDProduk.Text + ".jpg");
+                            string imageFileName = Guid.NewGuid().ToString() + ".jpg";
+                            imagePath = Path.Combine(imagesFolder, imageFileName);
                             pictureBox1.Image.Save(imagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
                             cmd.Parameters.AddWithValue("@gambar_produk", imagePath);
                         }
@@ -130,31 +132,39 @@ namespace UKK_kiiXii1
                             cmd.Parameters.AddWithValue("@gambar_produk", DBNull.Value);
                         }
 
-                        int rows = cmd.ExecuteNonQuery();
-                        if (rows > 0)
+                        // Eksekusi query dan ambil ID produk yang baru ditambahkan
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
                         {
-                            MessageBox.Show("Produk berhasil ditambahkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-                            txtNamaProduk.Clear();
-                            txtHarga.Clear();
-                            txtStok.Clear();
-                            txtDes.Clear();
-                            pictureBox1.Image = null;
-                            LoadData();
+                            int idProdukBaru = Convert.ToInt32(result);  // Ambil ID yang baru dimasukkan
+                            MessageBox.Show($"Produk berhasil ditambahkan dengan ID: {idProdukBaru}", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            MessageBox.Show("Gagal menambahkan produk.", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Gagal mengambil ID produk baru.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+
+                        // Reset form setelah menambah produk
+                        txtNamaProduk.Clear();
+                        txtHarga.Clear();
+                        txtStok.Clear();
+                        txtDes.Clear();
+                        pictureBox1.Image = null;
+
+                        // Refresh data grid view
+                        LoadData();
                     }
                 }
             }
             catch (Exception ex)
             {
+                // Tampilkan pesan error jika terjadi masalah
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+
 
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -182,7 +192,6 @@ namespace UKK_kiiXii1
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-                txtIDProduk.Text = row.Cells["id_produk"].Value.ToString();
                 txtNamaProduk.Text = row.Cells["nama_produk"].Value.ToString();
                 txtHarga.Text = row.Cells["harga"].Value.ToString();
                 txtStok.Text = row.Cells["stok"].Value.ToString();
@@ -224,19 +233,15 @@ namespace UKK_kiiXii1
         {
             try
             {
-                if (string.IsNullOrEmpty(txtIDProduk.Text))
+                // Cek apakah ada baris yang dipilih di DataGridView
+                if (dataGridView1.SelectedRows.Count == 0)
                 {
-                    MessageBox.Show("Pilih produk yang ingin dihapus!", "Peringatan",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Pilih produk yang ingin dihapus!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!int.TryParse(txtIDProduk.Text, out int itemId))
-                {
-                    MessageBox.Show("ID produk tidak valid!", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                // Ambil ID Produk dari baris yang dipilih
+                int itemId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id_produk"].Value);
 
                 // Konfirmasi hapus
                 DialogResult dr = MessageBox.Show(
@@ -252,7 +257,7 @@ namespace UKK_kiiXii1
                 SqlConnection sqlConnection = conn.GetConn();
                 sqlConnection.Open();
 
-                // Ambil path gambar dulu
+                // Ambil path gambar produk sebelum dihapus
                 string getImgQuery = "SELECT gambar_produk FROM products WHERE id_produk = @id";
                 string imagePath = null;
 
@@ -264,6 +269,7 @@ namespace UKK_kiiXii1
                         imagePath = result.ToString();
                 }
 
+                // Hapus produk dari database berdasarkan id_produk
                 string deleteQuery = "DELETE FROM products WHERE id_produk = @id_produk";
                 using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, sqlConnection))
                 {
@@ -273,25 +279,19 @@ namespace UKK_kiiXii1
 
                 sqlConnection.Close();
 
-                if (pictureBox1.Image != null)
-                {
-                    pictureBox1.Image.Dispose();
-                    pictureBox1.Image = null;
-                }
-
+                // Hapus gambar fisik jika ada
                 if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
                 {
-                    File.Delete(imagePath);
+                    File.Delete(imagePath); // Menghapus gambar dari folder
                 }
 
-                MessageBox.Show("Produk berhasil dihapus!", "Sukses",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Produk berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // merefresh datagrid
+                // Merefresh data grid dan reset form
                 LoadData();
 
+                // Reset form
                 txtNamaProduk.Clear();
-                txtIDProduk.Clear();
                 txtHarga.Clear();
                 txtStok.Clear();
                 txtDes.Clear();
@@ -299,84 +299,70 @@ namespace UKK_kiiXii1
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+
         private void btnupdate_Click(object sender, EventArgs e)
         {
-            string id = txtIDProduk.Text.Trim();
-            string nama = txtNamaProduk.Text.Trim();
-            string harga = txtHarga.Text.Trim();
-            string stok = txtStok.Text.Trim();
-            string deskripsi = txtDes.Text.Trim();
-
-            if (string.IsNullOrEmpty(id))
+            // Cek apakah ada baris yang dipilih di DataGridView
+            if (dataGridView1.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Pilih produk yang akan diupdate.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // Ambil ID Produk dari baris yang dipilih
+            int idProduk = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id_produk"].Value);
+
+            // Ambil data lain yang perlu diupdate
+            string nama = txtNamaProduk.Text.Trim();
+            string harga = txtHarga.Text.Trim();
+            string stok = txtStok.Text.Trim();
+            string deskripsi = txtDes.Text.Trim();
+
             // Validasi harga & stok
+            if (string.IsNullOrEmpty(nama) || string.IsNullOrEmpty(harga) || string.IsNullOrEmpty(stok))
+            {
+                MessageBox.Show("Nama produk, harga, dan stok tidak boleh kosong.", "Input Kosong", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (!decimal.TryParse(harga, out decimal hargaProduk))
             {
                 MessageBox.Show("Harga tidak valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             if (!int.TryParse(stok, out int stokProduk))
             {
                 MessageBox.Show("Stok tidak valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Folder gambar
-            string folderGambar = Path.Combine(Application.StartupPath, "images");
-            if (!Directory.Exists(folderGambar))
+            // Cek gambar baru (jika ada)
+            string gambarPath = ""; // Path gambar untuk database
+
+            if (pictureBox1.Image != null)
             {
-                Directory.CreateDirectory(folderGambar);
+                string ext = ".jpg";
+                string namaFileBaru = $"{idProduk}_{DateTime.Now:yyyyMMddHHmmss}{ext}";
+                string folderGambar = Path.Combine(Application.StartupPath, "images");
+                string tempPath = Path.Combine(folderGambar, namaFileBaru);
+
+                // Simpan gambar baru
+                pictureBox1.Image.Save(tempPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                gambarPath = tempPath;
             }
 
-            string gambarPath = ""; // path gambar untuk DB
-
-            Conn koneksi = new Conn();
-            using (SqlConnection conn = koneksi.GetConn())
+            try
             {
-                try
+                using (SqlConnection conn = new SqlConnection(@"Data Source=MYPCPRO\SQLEXPRESS;Initial Catalog=ukk_riki;Integrated Security=True;TrustServerCertificate=True"))
                 {
                     conn.Open();
 
-                    // Ambil gambar lama dari DB
-                    string queryGetImage = "SELECT gambar_produk FROM products WHERE id_produk = @id";
-                    string gambarLama;
-                    using (SqlCommand cmd = new SqlCommand(queryGetImage, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", id);
-                        gambarLama = cmd.ExecuteScalar()?.ToString() ?? string.Empty;
-                    }
-
-                    // Jika user memilih gambar baru
-                    if (pictureBox1.Image != null)
-                    {
-                        // Buat nama file baru agar tidak overwrite file lama
-                        string ext = ".jpg";
-                        string namaFileBaru = $"{id}_{DateTime.Now:yyyyMMddHHmmss}{ext}";
-                        string tempPath = Path.Combine(folderGambar, namaFileBaru);
-
-                        using (Bitmap bmp = new Bitmap(pictureBox1.Image))
-                        {
-                            bmp.Save(tempPath, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        }
-
-                        gambarPath = tempPath; // simpan path baru ke DB
-                    }
-                    else
-                    {
-                        // Jika tidak memilih gambar baru, tetap pakai gambar lama
-                        gambarPath = string.IsNullOrEmpty(gambarLama) ? null : gambarLama;
-                    }
-
-                    // UPDATE produk
+                    // Query untuk update produk berdasarkan id_produk
                     string updateQuery = @"UPDATE products 
                                    SET nama_produk=@nama, harga=@harga, stok=@stok, deskripsi=@deskripsi, 
                                        gambar_produk=@gambar_produk, tanggal_upload=@tanggal
@@ -384,7 +370,7 @@ namespace UKK_kiiXii1
 
                     using (SqlCommand cmdUpdate = new SqlCommand(updateQuery, conn))
                     {
-                        cmdUpdate.Parameters.AddWithValue("@id", id);
+                        cmdUpdate.Parameters.AddWithValue("@id", idProduk);
                         cmdUpdate.Parameters.AddWithValue("@nama", nama);
                         cmdUpdate.Parameters.AddWithValue("@harga", hargaProduk);
                         cmdUpdate.Parameters.AddWithValue("@stok", stokProduk);
@@ -397,29 +383,22 @@ namespace UKK_kiiXii1
 
                     MessageBox.Show("Data berhasil diubah!", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    txtIDProduk.Clear();
+                    // Reset form dan refresh data grid view
                     txtNamaProduk.Clear();
                     txtHarga.Clear();
                     txtStok.Clear();
                     txtDes.Clear();
+                    pictureBox1.Image = null;
 
-                    if (pictureBox1.Image != null)
-                    {
-                        pictureBox1.Image.Dispose();
-                        pictureBox1.Image = null;
-                    }
-
+                    // Memuat ulang data
                     LoadData();
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
 
         private void Home_Load(object sender, EventArgs e)
         {
